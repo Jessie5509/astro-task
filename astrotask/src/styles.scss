@@ -1,0 +1,319 @@
+@import url("https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap");
+
+:root {
+  font-family: "Chakra Petch", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-style: normal;
+  background-color: #111;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: #111;
+}
+
+main {
+  width: 100dvw;
+  height: 100dvh;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding-top: 50px;
+}
+
+section {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+article {
+  position: relative;
+  width: 23dvw;
+  height: 80dvh;
+  border-radius: 8px;
+  padding-bottom: 20px;
+  text-align: center;
+  background-color: #f3f3f3;
+}
+
+h1 {
+  margin-top: 15px;
+  font-family: "Chakra Petch", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+ul {
+  list-style: none;
+  padding: 15px;
+}
+
+li {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 4dvh;
+  text-align: left;
+}
+
+.card-label {
+  background-color: #f3f3f3;
+  padding: 8px;
+  border-bottom: solid 1px lightgray;
+  border-top: solid 1px lightgray;
+  color: grey;
+  cursor: pointer;
+  font-family: "Chakra Petch", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.container-tasks {
+  max-height: 34dvh;
+  overflow: auto;
+  scroll-behavior: smooth;
+  scrollbar-color: #e1aa74 #f3f3f3;
+  scrollbar-width: thin;
+}
+
+label {
+  background-color: #f3f3f3;
+  color: grey;
+  font-family: "Chakra Petch", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  padding-bottom: 10px;
+}
+
+input[type="checkbox"]:checked + label {
+  text-decoration: line-through;
+  background: #e1aa74;
+  color: white;
+}
+
+.chk {
+  appearance: none;
+  margin: 0px;
+}
+
+.new-task {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 30px;
+  border: none;
+  background-color: #e1aa74;
+  color: white;
+  cursor: pointer;
+  font-family: "Chakra Petch", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: large;
+}
+
+.container-clouds {
+  width: 100%;
+  height: 30dvh;
+  padding-top: 20px;
+  background-size: cover;
+  background-image: url("/clouds.jpg");
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.today-date {
+  font-family: "Chakra Petch", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  color: white;
+}
+
+/* -------------------------------------- Modal -------------------------------------- */
+
+.modal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+dialog {
+  width: 45%;
+  height: 40%;
+  border: none;
+  border-radius: 12px;
+  background-color: #f3f3f3;
+}
+
+form > div {
+  text-align: center;
+  padding: 4px;
+}
+.form-data {
+  width: min-content;
+  margin: 6px;
+}
+
+.container-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-task {
+  border: solid 1px lightgray;
+  color: black;
+  border-radius: 6px;
+  height: 3dvh;
+  margin-top: 5px;
+  font-family: "Chakra Petch", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: 15px;
+}
+.input-task:focus {
+  outline: none;
+}
+
+.btn-add-task {
+  width: 14%;
+  border: none;
+  border-radius: 12px;
+  background-color: #e1aa74;
+  color: white;
+  padding: 6px;
+  margin-top: 35px;
+  font-family: "Chakra Petch", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#closeModal {
+  position: absolute;
+  right: 20px;
+  border: none;
+  cursor: pointer;
+  font-family: "Chakra Petch", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  background-color: #f3f3f3;
+  color: black;
+}
+
+/* -------------------------------------- End -------------------------------------- */
+
+/* Page bg */
+
+/* Config */
+$color-bg: #111;
+$color-particle: #fff;
+$spacing: 2560px;
+$time-1: 60s;
+$time-2: 120s;
+$time-3: 180s;
+$time-4: 600s;
+
+/* Pauls awesome mixin */
+@function particles($max) {
+  $val: 0px 0px $color-particle;
+  @for $i from 1 through $max {
+    $val: #{$val}, random($spacing) + px random($spacing) + px $color-particle;
+  }
+  @return $val;
+}
+
+@mixin particles($max, $spacing) {
+  box-shadow: particles($max, $spacing);
+}
+
+@mixin particles($max) {
+  box-shadow: particles($max);
+}
+
+.particle,
+.particle:after {
+  background: transparent;
+}
+
+.particle:after {
+  position: absolute;
+  content: "";
+  top: $spacing;
+}
+
+.particle-1 {
+  animation: animParticle $time-1 linear infinite;
+  @include particles(600);
+  height: 1px;
+  width: 1px;
+}
+
+.particle-1:after {
+  @include particles(600);
+  height: 1px;
+  width: 1px;
+}
+
+.particle-2 {
+  animation: animParticle $time-2 linear infinite;
+  @include particles(200);
+  height: 2px;
+  width: 2px;
+}
+
+.particle-2:after {
+  @include particles(200);
+  height: 2px;
+  width: 2px;
+}
+
+.particle-3 {
+  animation: animParticle $time-3 linear infinite;
+  @include particles(100);
+  height: 3px;
+  width: 3px;
+}
+
+.particle-3:after {
+  @include particles(100);
+  height: 3px;
+  width: 3px;
+}
+
+.particle-4 {
+  animation: animParticle $time-4 linear infinite;
+  @include particles(400);
+  height: 1px;
+  width: 1px;
+}
+
+.particle-4:after {
+  @include particles(400);
+  height: 1px;
+  width: 1px;
+}
+
+@keyframes animParticle {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY($spacing * -1);
+  }
+}
