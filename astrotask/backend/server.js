@@ -1,6 +1,7 @@
-import express, { json, urlencoded } from "express";
-import Task from "./models/task";
-import { connect } from "mongoose";
+const express = require("express");
+const cors = require("cors");
+const Task = require("./models/task");
+const mongoose = require("mongoose");
 const app = express();
 const PORT = 4000;
 
@@ -10,7 +11,8 @@ const uri =
   "mongodb+srv://jess:3HjVUxT8N9X2R197@challengeapp.lndss9q.mongodb.net/todolist";
 
 // Conectar a la base de datos
-connect(uri, {})
+mongoose
+  .connect(uri, {})
   .then(() => {
     console.log("Conexión exitosa a MongoDB");
   })
@@ -20,18 +22,19 @@ connect(uri, {})
 
 //-----------------------------------------------------------------
 //Middleware things
-app.use(json());
-app.use(urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cors())
+app.use(express.urlencoded({ extended: true }));
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
 
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
   res.send("Main Page");
 });
 
-app.get("/tasks", async (req, res) => {
+app.get("/api/tasks", async (req, res) => {
   try {
     // Utiliza Mongoose para buscar todas las tareas en la base de datos
     const tasks = await Task.find({ completed: false });
@@ -58,6 +61,8 @@ app.post("/addTask", async (req, res) => {
       res.status(200).send("Tarea agregada correctamente");
     })
     .catch((err) => {
-      res.status(500).send("Error al guardar la tarea en la base de datos", err);
+      res
+        .status(500)
+        .send("Error al guardar la tarea en la base de datos", err);
     });
 });

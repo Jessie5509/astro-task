@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Tasks from "./components/Tasks";
 import "./styles.scss";
 
 const App = () => {
@@ -34,7 +35,7 @@ const App = () => {
             </div>
             <h1>Interstellar Itinerary</h1>
             <div className="container-tasks">
-              <ul id="tasks"></ul>
+              <Tasks />
             </div>
             <button className="new-task" onClick={openModal}>
               +

@@ -1,7 +1,7 @@
-import { Schema, model } from "mongoose";
+const mongoose = require("mongoose");
 
 // Definir un esquema para las tareas
-const taskSchema = new Schema({
+const taskSchema = new mongoose.Schema({
   title: { type: String, default: "Your task" },
   description: { type: String },
   priority: { type: String, enum: ["high", "medium", "low"], default: "low" },
@@ -9,6 +9,7 @@ const taskSchema = new Schema({
 });
 
 // Crear el modelo Task
-const Task = model("Task", taskSchema);
+const Task = mongoose.model("Task", taskSchema);
 
-export default Task;
+// export default Task;
+module.exports = Task;
