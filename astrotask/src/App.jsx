@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 import Tasks from "./components/Tasks";
 import "./styles.scss";
 
@@ -10,6 +11,12 @@ const App = () => {
     day: "numeric",
   };
   const [modal, setModal] = useState(false);
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    priority: "low",
+    completed: false,
+  });
   const [todayDate, setTodayDate] = useState(null);
   const fechaActual = new Date().toLocaleDateString("en-EN", options);
 
@@ -23,6 +30,34 @@ const App = () => {
 
   const closeModal = () => {
     setModal(false);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const newTask = async (e) => {
+    console.log("Form data", formData);
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/api/addTask",
+        formData
+      );
+      console.log(response.data);
+      setFormData({
+        title: "",
+        description: "",
+        priority: "low",
+        completed: false,
+      });
+    } catch (error) {
+      console.error("Error al enviar los datos:", error);
+    }
   };
 
   return (
@@ -46,7 +81,7 @@ const App = () => {
               <button id="closeModal" onClick={closeModal}>
                 x
               </button>
-              <form id="miFormulario" action="/addTask" method="POST">
+              <form id="miFormulario" onSubmit={newTask}>
                 <div className="container-form">
                   <h1>Create a new journey</h1>
                   <div className="form-data">
@@ -55,17 +90,22 @@ const App = () => {
                       type="text"
                       name="title"
                       id="title"
+                      value={formData.title}
                       className="input-task"
+                      onChange={handleChange}
                       required
                     />
                   </div>
                   <div className="form-data">
                     <label htmlFor="description">Description </label>
-                    <input
+                    <textarea
                       type="text"
                       name="description"
                       id="description"
-                      className="input-task"
+                      value={formData.description}
+                      rows="5"
+                      cols="33"
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="form-data">
@@ -74,15 +114,16 @@ const App = () => {
                       type="text"
                       name="priority"
                       id="priority"
+                      value={formData.priority}
                       className="input-task"
-                      required
+                      onChange={handleChange}
                     >
                       <option value="low">low</option>
                       <option value="medium">medium</option>
                       <option value="high">high</option>
                     </select>
                   </div>
-                  <button type="submit" className="btn-add-task">
+                  <button type="submit" className="btn-add-task" onClick={closeModal}>
                     Add
                   </button>
                 </div>

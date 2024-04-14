@@ -23,7 +23,7 @@ mongoose
 //-----------------------------------------------------------------
 //Middleware things
 app.use(express.json());
-app.use(cors())
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 app.listen(PORT, () => {
@@ -48,21 +48,18 @@ app.get("/api/tasks", async (req, res) => {
   }
 });
 
-app.post("/addTask", async (req, res) => {
-  const newTask = new Task({
-    title: req.body.title,
-    description: req.body.description,
-    priority: req.body.priority,
-    completed: req.body.completed,
-  });
-  newTask
-    .save()
-    .then(() => {
-      res.status(200).send("Tarea agregada correctamente");
-    })
-    .catch((err) => {
-      res
-        .status(500)
-        .send("Error al guardar la tarea en la base de datos", err);
+app.post("/api/addTask", async (req, res) => {
+  try {
+    const newTask = new Task({
+      title: req.body.title,
+      description: req.body.description,
+      priority: req.body.priority,
+      completed: req.body.completed,
     });
+    await newTask.save();
+    res.status(200).json({ message: "Tarea agregada correctamente" });
+  } catch (error) {
+    console.error("Error al guardar la tarea en la base de datos:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
 });

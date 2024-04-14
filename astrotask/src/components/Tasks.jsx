@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState(null);
@@ -6,11 +7,11 @@ const Tasks = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:4000/api/tasks");
-        if (!response.ok) {
+        const response = await axios.get("http://localhost:4000/api/tasks");
+        if (response.status !== 200) {
           throw new Error("Failed to fetch tasks!");
         }
-        const jsonData = await response.json();
+        const jsonData = response.data;
         setTasks(jsonData);
       } catch (error) {
         console.log("Error", error);

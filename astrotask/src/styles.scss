@@ -157,7 +157,7 @@ input[type="checkbox"]:checked + label {
 
 dialog {
   width: 45%;
-  height: 40%;
+  height: auto;
   border: none;
   border-radius: 12px;
   background-color: #f3f3f3;
@@ -189,8 +189,23 @@ form > div {
   font-style: italic;
   font-size: 15px;
 }
-.input-task:focus {
+.input-task, textarea:focus {
   outline: none;
+}
+
+textarea {
+  border: solid 1px lightgray;
+  color: black;
+  border-radius: 6px;
+  margin-top: 5px;
+  font-family: "Chakra Petch", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: 15px;
+  overflow: auto;
+  scroll-behavior: smooth;
+  scrollbar-color: #e1aa74 #f3f3f3;
+  scrollbar-width: thin;
 }
 
 .btn-add-task {
