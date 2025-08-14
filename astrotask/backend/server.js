@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const express = require("express");
 const cors = require("cors");
 const Task = require("./models/task");
@@ -48,6 +49,20 @@ app.get("/api/tasks", async (req, res) => {
   }
 });
 
+app.get("/api/donetasks", async (req, res) => {
+  try {
+    // Utiliza Mongoose para buscar todas las tareas en la base de datos
+    const tasks = await Task.find({ completed: true });
+    // Devuelve las tareas como respuesta JSON
+    res.json(tasks);
+  } catch (error) {
+    // Si hay un error, devuelve un mensaje de error como respuesta
+    res
+      .status(500)
+      .json({ message: "Error al obtener las tareas de la base de datos" });
+  }
+});
+
 app.post("/api/addTask", async (req, res) => {
   try {
     const newTask = new Task({
@@ -60,6 +75,32 @@ app.post("/api/addTask", async (req, res) => {
     res.status(200).json({ message: "Tarea agregada correctamente" });
   } catch (error) {
     console.error("Error al guardar la tarea en la base de datos:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
+
+app.patch("/api/updateTask/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id))
+      return res.status(400).json({ error: "Invalid id" });
+
+    const updates = {
+      completed: req.body.completed,
+    };
+
+    const updatedTask = await Task.findByIdAndUpdate(id, updates, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!updatedTask) {
+      return res.status(404).json({ error: "Tarea no encontrada" });
+    }
+
+    res.status(200).json(updatedTask);
+  } catch (error) {
+    console.error("Error al actualizar la tarea en la base de datos:", error);
     res.status(500).json({ error: "Error interno del servidor" });
   }
 });

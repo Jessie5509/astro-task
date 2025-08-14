@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-// eslint-disable-next-line react/prop-types
-export const Tasks = ({ reload }) => {
+export const DoneTasks = () => {
   const [tasks, setTasks] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/api/tasks");
+        const response = await axios.get("http://localhost:4000/api/donetasks");
         if (response.status !== 200) {
           throw new Error("Failed to fetch tasks!");
         }
@@ -19,37 +18,16 @@ export const Tasks = ({ reload }) => {
       }
     };
     fetchData();
-  }, [reload, tasks]);
-
-  const completedTask = async (id) => {
-    try {
-      const response = await axios.patch(
-        `http://localhost:4000/api/updateTask/${encodeURIComponent(id)}`,
-        { completed: true }
-      );
-      if (response.status !== 200) {
-        throw new Error("Failed to update tasks!");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  }, [tasks]);
 
   return (
-    <main>
+    <main className="pt-[50px]">
       <section>
         <ul>
           {tasks &&
             tasks.map((t) => (
               <li key={t._id}>
-                <input
-                  type="checkbox"
-                  id={t._id}
-                  className="chk"
-                  name="chk"
-                  checked={t.completed}
-                  onChange={() => completedTask(t._id)}
-                />
+                {/* <input type="checkbox" id={t._id} className="chk" name="chk" /> */}
                 <label htmlFor={t._id} className="card-label">
                   <img src="../rocket.png" alt="Rocket" className="rocket" />
                   {t.title}
@@ -62,4 +40,4 @@ export const Tasks = ({ reload }) => {
   );
 };
 
-export default Tasks;
+export default DoneTasks;
