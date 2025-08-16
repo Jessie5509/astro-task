@@ -3,17 +3,17 @@ import Tasks from "./Tasks";
 import Modal from "./Modal";
 
 export const Itinerary = () => {
-  const options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
   const [modal, setModal] = useState(false);
   const [todayDate, setTodayDate] = useState(null);
   const [reloadTasks, setReloadTasks] = useState(0);
 
   useEffect(() => {
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
     const fechaActual = new Date().toLocaleDateString("en-EN", options);
     setTodayDate(fechaActual);
   }, []);

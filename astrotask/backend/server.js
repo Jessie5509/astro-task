@@ -1,19 +1,16 @@
 /* eslint-disable no-undef */
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const Task = require("./models/task");
 const mongoose = require("mongoose");
 const app = express();
-const PORT = 4000;
+const PORT = process.env.PORT;
 
 // #region DATABASE
-// URI de conexión a tu base de datos MongoDB
-const uri =
-  "mongodb+srv://jess:3HjVUxT8N9X2R197@challengeapp.lndss9q.mongodb.net/todolist";
-
 // Conectar a la base de datos
 mongoose
-  .connect(uri, {})
+  .connect(process.env.URI, {})
   .then(() => {
     console.log("Conexión exitosa a MongoDB");
   })

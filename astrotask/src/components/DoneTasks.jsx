@@ -27,7 +27,7 @@ export const DoneTasks = () => {
           {tasks &&
             tasks.map((t) => (
               <li key={t._id}>
-                {/* <input type="checkbox" id={t._id} className="chk" name="chk" /> */}
+                <input type="checkbox" id={t._id} className="chk" name="chk" checked />
                 <label htmlFor={t._id} className="card-label">
                   <img src="../rocket.png" alt="Rocket" className="rocket" />
                   {t.title}
