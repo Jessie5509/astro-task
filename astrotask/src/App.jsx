@@ -1,5 +1,4 @@
 import Itinerary from "./components/Itinerary";
-import DoneTasks from "./components/DoneTasks";
 
 const App = () => {
   return (
@@ -7,9 +6,6 @@ const App = () => {
       <section className="flex flex-row justify-center">
         <section>
           <Itinerary />
-        </section>
-        <section>
-          <DoneTasks />
         </section>
       </section>
       <div>

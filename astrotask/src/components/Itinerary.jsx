@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Tasks from "./Tasks";
+import WeatherAPI from "./WeatherAPI"
+import DoneTasks from "./DoneTasks";
 import Modal from "./Modal";
 
 export const Itinerary = () => {
@@ -41,12 +43,24 @@ export const Itinerary = () => {
           <article className="relative w-[23dvw] h-[80dvh] text-center bg-[#f3f3f3] pb-5 rounded-lg z-10">
             <div className="container-clouds">
               <span className="today-date">{todayDate}</span>
+              <article>
+                <WeatherAPI />
+              </article>
             </div>
 
             <h1>Interstellar Itinerary</h1>
-            <div className="container-tasks">
-              <Tasks reload={reloadTasks} />
-            </div>
+            <section className="container-tasks">
+              <article>
+                <h3>Planned</h3>
+                <Tasks reload={reloadTasks} />
+              </article>
+          
+              <article>
+                <h3>Done</h3>
+                <DoneTasks />
+              </article>
+            </section>
+
             <button className="new-task" onClick={openModal}>
               +
             </button>
